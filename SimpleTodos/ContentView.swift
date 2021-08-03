@@ -9,32 +9,43 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
+    @State var itemName: String = ""
     @Environment(\.managedObjectContext) private var viewContext
-
+    
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
         animation: .default)
     private var items: FetchedResults<Item>
-
+    
     var body: some View {
-        List {
-            ForEach(items) { item in
-                Text("Item at \(item.timestamp!, formatter: itemFormatter)")
+        VStack {
+            HStack {
+                TextField("Enter Item Name", text: $itemName)
+                    .textFieldStyle(PlainTextFieldStyle())
+                Button(action: {
+                    addItem()
+                }) {
+                    Text("Add Item")
+                }
             }
-            .onDelete(perform: deleteItems)
-        }
-        .toolbar {
-            Button(action: addItem) {
-                Label("Add Item", systemImage: "plus")
-            }
-        }
+            List {
+                ForEach(items) { item in
+                    
+                    TodoItemRow(editItem: item)
+                }
+                .onDelete(perform: deleteItems)
+            }        }
+            .padding()
     }
-
+    
     private func addItem() {
-        withAnimation {
+        withAnimation(.easeIn) {
             let newItem = Item(context: viewContext)
             newItem.timestamp = Date()
-
+            if !itemName.isEmpty {
+                newItem.name = itemName
+            }
+            itemName = ""
             do {
                 try viewContext.save()
             } catch {
@@ -45,11 +56,11 @@ struct ContentView: View {
             }
         }
     }
-
+    
     private func deleteItems(offsets: IndexSet) {
-        withAnimation {
+        withAnimation(.easeOut) {
             offsets.map { items[$0] }.forEach(viewContext.delete)
-
+            
             do {
                 try viewContext.save()
             } catch {
@@ -62,12 +73,6 @@ struct ContentView: View {
     }
 }
 
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

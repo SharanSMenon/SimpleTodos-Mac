@@ -13,6 +13,7 @@
 		0F30220326B8BA6A008EB581 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F30220226B8BA6A008EB581 /* Preview Assets.xcassets */; };
 		0F30220526B8BA6A008EB581 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F30220426B8BA6A008EB581 /* Persistence.swift */; };
 		0F30220826B8BA6A008EB581 /* SimpleTodos.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0F30220626B8BA6A008EB581 /* SimpleTodos.xcdatamodeld */; };
+		0F82297526B9A4F700388A2B /* TodoItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F82297426B9A4F700388A2B /* TodoItemRow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		0F30220726B8BA6A008EB581 /* SimpleTodos.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SimpleTodos.xcdatamodel; sourceTree = "<group>"; };
 		0F30220926B8BA6A008EB581 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0F30220A26B8BA6A008EB581 /* SimpleTodos.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SimpleTodos.entitlements; sourceTree = "<group>"; };
+		0F82297426B9A4F700388A2B /* TodoItemRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItemRow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 				0F30220A26B8BA6A008EB581 /* SimpleTodos.entitlements */,
 				0F30220626B8BA6A008EB581 /* SimpleTodos.xcdatamodeld */,
 				0F30220126B8BA6A008EB581 /* Preview Content */,
+				0F82297426B9A4F700388A2B /* TodoItemRow.swift */,
 			);
 			path = SimpleTodos;
 			sourceTree = "<group>";
@@ -147,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F30220526B8BA6A008EB581 /* Persistence.swift in Sources */,
+				0F82297526B9A4F700388A2B /* TodoItemRow.swift in Sources */,
 				0F3021FE26B8BA69008EB581 /* ContentView.swift in Sources */,
 				0F3021FC26B8BA69008EB581 /* SimpleTodosApp.swift in Sources */,
 				0F30220826B8BA6A008EB581 /* SimpleTodos.xcdatamodeld in Sources */,
