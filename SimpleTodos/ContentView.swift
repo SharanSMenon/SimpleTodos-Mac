@@ -12,6 +12,7 @@ struct ContentView: View {
     @State var itemName: String = ""
     @Environment(\.managedObjectContext) private var viewContext
     
+    
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
         animation: .default)
@@ -25,47 +26,50 @@ struct ContentView: View {
                 Button(action: {
                     addItem()
                 }) {
-                    Text("Add Item")
+                    Image(systemName: "plus").font(.system(size:18))
+                }
+                .buttonStyle(PlainButtonStyle())
+            }
+            .padding(.init(top: 20, leading: 20, bottom: 10, trailing: 18))
+            List {
+                ForEach(items, id: \.id) {item in
+                    HStack {
+                        TodoItemRow(editItem: item)
+                        Button(action: {
+                            withAnimation {
+                                viewContext.perform {
+                                    do {
+                                        viewContext.delete(item)
+                                        try viewContext.save()
+                                    } catch {
+                                        viewContext.rollback()
+                                        print(error.localizedDescription)
+                                    }
+                                }
+                            }
+                        }) {
+                            Image(systemName: "minus.circle").font(.system(size:18))
+                        }
+                    }
+                    .buttonStyle(PlainButtonStyle())
                 }
             }
-            List {
-                ForEach(items) { item in
-                    
-                    TodoItemRow(editItem: item)
-                }
-                .onDelete(perform: deleteItems)
-            }        }
-            .padding()
+            
+        }
+        
     }
     
     private func addItem() {
-        withAnimation(.easeIn) {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-            if !itemName.isEmpty {
-                newItem.name = itemName
-            }
-            itemName = ""
+        withAnimation {
+            let newItem: Item = Item(context: viewContext)
+            let timestamp: Date = Date()
+            newItem.timestamp = timestamp
+            newItem.name = self.itemName
+            newItem.id = UUID()
             do {
                 try viewContext.save()
+                self.itemName = ""
             } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
-    
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation(.easeOut) {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
-            
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
                 let nsError = error as NSError
                 fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
             }

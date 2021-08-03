@@ -31,7 +31,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let contentView = ContentView().environment(\.managedObjectContext, persistenceController.container.viewContext)
         
         let popover = NSPopover()
-        popover.contentSize = NSSize(width: 400, height: 400)
+        popover.contentSize = NSSize(width: 400, height: 390)
         popover.behavior = .transient
         popover.contentViewController = NSHostingController(rootView: contentView)
         self.popover = popover
