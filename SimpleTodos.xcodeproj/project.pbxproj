@@ -28,6 +28,7 @@
 		0F30220726B8BA6A008EB581 /* SimpleTodos.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SimpleTodos.xcdatamodel; sourceTree = "<group>"; };
 		0F30220926B8BA6A008EB581 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0F30220A26B8BA6A008EB581 /* SimpleTodos.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SimpleTodos.entitlements; sourceTree = "<group>"; };
+		0F4EB9A826BB203400CA78A1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		0F82297426B9A4F700388A2B /* TodoItemRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItemRow.swift; sourceTree = "<group>"; };
 		0FC9CFE726BB021B0096E619 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		0FC9CFE926BB038B0096E619 /* TodoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListView.swift; sourceTree = "<group>"; };
@@ -47,6 +48,7 @@
 		0F3021EF26B8BA69008EB581 = {
 			isa = PBXGroup;
 			children = (
+				0F4EB9A826BB203400CA78A1 /* README.md */,
 				0F3021FA26B8BA69008EB581 /* SimpleTodos */,
 				0F3021F926B8BA69008EB581 /* Products */,
 			);
