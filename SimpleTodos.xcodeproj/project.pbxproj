@@ -14,6 +14,8 @@
 		0F30220526B8BA6A008EB581 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F30220426B8BA6A008EB581 /* Persistence.swift */; };
 		0F30220826B8BA6A008EB581 /* SimpleTodos.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0F30220626B8BA6A008EB581 /* SimpleTodos.xcdatamodeld */; };
 		0F82297526B9A4F700388A2B /* TodoItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F82297426B9A4F700388A2B /* TodoItemRow.swift */; };
+		0FC9CFE826BB021B0096E619 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC9CFE726BB021B0096E619 /* SettingsView.swift */; };
+		0FC9CFEA26BB038B0096E619 /* TodoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC9CFE926BB038B0096E619 /* TodoListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +29,8 @@
 		0F30220926B8BA6A008EB581 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0F30220A26B8BA6A008EB581 /* SimpleTodos.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SimpleTodos.entitlements; sourceTree = "<group>"; };
 		0F82297426B9A4F700388A2B /* TodoItemRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItemRow.swift; sourceTree = "<group>"; };
+		0FC9CFE726BB021B0096E619 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		0FC9CFE926BB038B0096E619 /* TodoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +72,8 @@
 				0F30220626B8BA6A008EB581 /* SimpleTodos.xcdatamodeld */,
 				0F30220126B8BA6A008EB581 /* Preview Content */,
 				0F82297426B9A4F700388A2B /* TodoItemRow.swift */,
+				0FC9CFE726BB021B0096E619 /* SettingsView.swift */,
+				0FC9CFE926BB038B0096E619 /* TodoListView.swift */,
 			);
 			path = SimpleTodos;
 			sourceTree = "<group>";
@@ -152,6 +158,8 @@
 				0F30220526B8BA6A008EB581 /* Persistence.swift in Sources */,
 				0F82297526B9A4F700388A2B /* TodoItemRow.swift in Sources */,
 				0F3021FE26B8BA69008EB581 /* ContentView.swift in Sources */,
+				0FC9CFE826BB021B0096E619 /* SettingsView.swift in Sources */,
+				0FC9CFEA26BB038B0096E619 /* TodoListView.swift in Sources */,
 				0F3021FC26B8BA69008EB581 /* SimpleTodosApp.swift in Sources */,
 				0F30220826B8BA6A008EB581 /* SimpleTodos.xcdatamodeld in Sources */,
 			);
@@ -292,7 +300,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.3;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sharansajivmenon.SimpleTodos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -316,7 +325,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.3;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sharansajivmenon.SimpleTodos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

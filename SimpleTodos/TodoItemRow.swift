@@ -10,29 +10,18 @@ import SwiftUI
 struct TodoItemRow: View {
     @Environment(\.managedObjectContext) var viewContext
     @ObservedObject var editItem: Item
+    @AppStorage("showDueDates") private var showDueDates = true
+    @AppStorage("allowDatePicker") private var allowDatePicker = true
     
     @State private var name: String = ""
     @State private var isCompleted: Bool = false
     @State private var editMode: Bool = false
-    
-//    init(editItem: Item) {
-//        self.editItem = editItem
-//        self._name = State<String>(initialValue: editItem.name!)
-//        self._isCompleted = State<Bool>(initialValue: editItem.isCompleted)
-//        self._editMode = State<Bool>(initialValue: false)
-//        viewContext.performAndWait {
-//            try? viewContext.save()
-//        }
-//    }
-//    func initStuff(item: Item) {
-//        print(item.name ?? "Untitled Todo")
-//        self.name = item.name ?? "Untitled Todo"
-//        print(self.name)
-//    }
+    @State private var selectedDate = Date()
+    @State var isHover = false
+    @State private var showDatePicker = false
     
     var body: some View {
-//        initStuff(item: editItem)
-        return HStack {
+        HStack(alignment:.top, spacing:5) {
             Button(action: {
                 withAnimation {
                     let newStatus: Bool = !editItem.isCompleted
@@ -48,7 +37,7 @@ struct TodoItemRow: View {
                     .foregroundColor(editItem.isCompleted ? .green : .blue)
             }
             .buttonStyle(PlainButtonStyle())
-            VStack(alignment:.leading, spacing:0) {
+            VStack(alignment:.leading, spacing:editMode ? 3 : 0) {
                 if editMode == false {
                     Text(editItem.name ?? "Untitled Todo")
                 }
@@ -66,21 +55,88 @@ struct TodoItemRow: View {
                         })
                         .textFieldStyle(PlainTextFieldStyle())
                 }
-                Text("\(editItem.timestamp ?? Date(), formatter: dateFormatter)").font(.subheadline)
-                    .foregroundColor(.gray)
+                if editItem.finishDate != nil && editMode == false && showDueDates {
+                    Text("\(editItem.finishDate ?? Date(), formatter: dateFormatter)").font(.subheadline)
+                        .foregroundColor(Color(red: 220 / 255, green: 220 / 255, blue: 220 / 255))
+                }
+                // Show Date Picker Button
+                HStack {
+                    if showDatePicker == false && editMode && allowDatePicker {
+                        Button(action: {
+                            showDatePicker = true
+                        }) {
+                            Text("Show Date Picker")
+                        }
+                        .font(.subheadline)
+                        .buttonStyle(PlainButtonStyle())
+                        .padding(0)
+                    }
+                    // Date Picker
+                    if editMode && showDatePicker && allowDatePicker {
+                        DatePicker("", selection: $selectedDate, displayedComponents: [.date])
+                            .datePickerStyle(CompactDatePickerStyle())
+                            .onChange(of: selectedDate, perform: { value in
+                                let newDate = selectedDate
+                                viewContext.performAndWait {
+                                    editItem.finishDate = newDate
+                                    try? viewContext.save()
+                                }
+                            })
+                            .onAppear(perform: {
+                                self.selectedDate = editItem.finishDate ?? Date()
+                            })
+                            .scaleEffect(/*@START_MENU_TOKEN@*/1.0/*@END_MENU_TOKEN@*/)
+                            .animation(.easeInOut)
+                            .font(.system(size:12))
+                    }
+                    if editMode && editItem.finishDate != nil && allowDatePicker {
+                        Divider()
+                        Button(action: {
+                            viewContext.performAndWait {
+                                editItem.finishDate = nil
+                                try? viewContext.save()
+                                editMode = false
+                            }
+                        }) {
+                            Text("Remove Date")
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .font(.subheadline)
+                    }
+                }
             }
             Spacer()
-            Button(action: {
-                editMode.toggle()
-            }) {
-                if editMode == false {
+            if self.isHover || self.editMode {
+                Button(action: {
+                    editMode.toggle()
+                    showDatePicker = false
+                }) {
                     Image(systemName: "pencil.circle").font(.system(size:18))
-                } else {
-                    Text("Finish")
+                        .rotationEffect(.degrees(editMode ? 360 : 0))
+                        .animation(.easeInOut)
                 }
+                .buttonStyle(PlainButtonStyle())
+            }
+            Button(action: {
+                withAnimation {
+                    viewContext.perform {
+                        do {
+                            viewContext.delete(editItem)
+                            try viewContext.save()
+                        } catch {
+                            viewContext.rollback()
+                            print(error.localizedDescription)
+                        }
+                    }
+                }
+            }) {
+                Image(systemName: "minus.circle").font(.system(size:18))
             }
             .buttonStyle(PlainButtonStyle())
         }
+        .onHover(perform: { hovering in
+            isHover = hovering
+        })
     }
 }
 
@@ -88,7 +144,7 @@ private let dateFormatter: DateFormatter = {
     let formatter = DateFormatter()
     //    formatter.dateFormat = "EEE, MMM dd, yyyy 'at' h:MM a"
     formatter.dateStyle = .short
-    formatter.timeStyle = .medium
+    formatter.timeStyle = .none
     return formatter
 }()
 

@@ -11,7 +11,7 @@ import CoreData
 struct ContentView: View {
     @State var itemName: String = ""
     @Environment(\.managedObjectContext) private var viewContext
-    
+    @State var showSettings: Bool = false
     
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
@@ -20,60 +20,25 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                TextField("Enter Item Name", text: $itemName)
-                    .textFieldStyle(PlainTextFieldStyle())
+            if !showSettings {
+                TodoListView()
+            } else {
+                SettingsView()
+            }
+            Spacer()
+            HStack(alignment:.top) {
                 Button(action: {
-                    addItem()
+                    showSettings.toggle()
                 }) {
-                    Image(systemName: "plus").font(.system(size:18))
+                    Image(systemName: showSettings ? "return" : "gear")
+                        .font(.system(size:20))
                 }
                 .buttonStyle(PlainButtonStyle())
-            }
-            .padding(.init(top: 20, leading: 20, bottom: 10, trailing: 18))
-            List {
-                ForEach(items, id: \.id) {item in
-                    HStack {
-                        TodoItemRow(editItem: item)
-                        Button(action: {
-                            withAnimation {
-                                viewContext.perform {
-                                    do {
-                                        viewContext.delete(item)
-                                        try viewContext.save()
-                                    } catch {
-                                        viewContext.rollback()
-                                        print(error.localizedDescription)
-                                    }
-                                }
-                            }
-                        }) {
-                            Image(systemName: "minus.circle").font(.system(size:18))
-                        }
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                }
-            }
-            
+                Spacer()
+            }.frame(width:.infinity)
+            .padding()
         }
-        
-    }
-    
-    private func addItem() {
-        withAnimation {
-            let newItem: Item = Item(context: viewContext)
-            let timestamp: Date = Date()
-            newItem.timestamp = timestamp
-            newItem.name = self.itemName
-            newItem.id = UUID()
-            do {
-                try viewContext.save()
-                self.itemName = ""
-            } catch {
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
+        .frame(height:400)
     }
 }
 
